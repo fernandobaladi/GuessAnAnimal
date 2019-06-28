@@ -13,7 +13,16 @@ public class Árbol {
     private NodoÁrbol nodoRaíz;
     private int númeroDeNodos;
 
-
+    
+    //Se instancia el árbol totalmente vacío
+    public Árbol(){
+        this.nodoRaíz = null;
+        this.númeroDeNodos = 0;
+    
+    }
+    
+    
+    //El método devuelve verdadero si está vacío el árbol
     public boolean esVacio(){
     
         if (númeroDeNodos == 0) {
@@ -23,6 +32,8 @@ public class Árbol {
     
     }
     
+    
+    //Recorre en Inorden de forma recursiva
     public void recorrerInOrden(NodoÁrbol padre){
     
         if(padre!=null){
@@ -30,19 +41,24 @@ public class Árbol {
                 System.out.print(padre.getData()+" ");
                 recorrerInOrden(padre.getHijoDerecho());
         }
-        
+   
     }
+   
     
-    public void recorrerPostOrden(NodoÁrbol padre){
+    //Recorre en Posorden de forma recursiva
+    public void recorrerPosOrden(NodoÁrbol padre){
     
         if(padre!=null){
-                recorrerPostOrden(padre.getHijoIzquierdo());
-                recorrerPostOrden(padre.getHijoDerecho());
+                recorrerPosOrden(padre.getHijoIzquierdo());
+                recorrerPosOrden(padre.getHijoDerecho());
                 System.out.print(padre.getData()+" ");
         }
         
     }
     
+    
+    
+    //Recorre en Preorden de forma recursiva
     public void recorrerPreOrden(NodoÁrbol padre){
     
         if(padre!=null){
@@ -53,6 +69,8 @@ public class Árbol {
         
     }
     
+    
+    //Busca desde la ráiz el nodo con el dato que se está buscando
     public NodoÁrbol Buscar(NodoÁrbol raiz, String clave){
         NodoÁrbol objetivo;
         if(raiz!=null){
@@ -70,7 +88,10 @@ public class Árbol {
         return objetivo;
     }
     
-    public void Insertar(NodoÁrbol padre, NodoÁrbol hijo){
+    
+    //Inserta un nodo hijo en el padre que se le pase.
+    /*NOTA IMPORTANTE: Para poder agregar información de esta manera primero debe instanciarse el nodo con la información y luego ingresarla al árbol*/
+    public void InsertarNodo(NodoÁrbol padre, NodoÁrbol hijo){
         NodoÁrbol aux;
         if (padre!=null){
             if(padre.getHijoIzquierdo()==null){
@@ -95,7 +116,16 @@ public class Árbol {
 
     
     }
+    
+   //Con este método se poda todo el árbol, dejándolo vacío
+    public void Limpiar(){
+        
+        this.nodoRaíz = null;
+        this.númeroDeNodos = 0;
+        
+    }  
 
+    
     public NodoÁrbol getNodoRaíz() {
         return nodoRaíz;
     }
