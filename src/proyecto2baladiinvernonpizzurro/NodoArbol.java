@@ -9,30 +9,30 @@ package proyecto2baladiinvernonpizzurro;
  *
  * @author Fernando Baladi
  */
-public class NodoÁrbol {
-    private NodoÁrbol hijoIzquierdo;
-    private NodoÁrbol hijoDerecho;
+public class NodoArbol {
+    private NodoArbol hijoIzquierdo;
+    private NodoArbol hijoDerecho;
     private String data; //Objeto que se le pasa al árbol
     
-    public NodoÁrbol(String data){
+    public NodoArbol(String data){
         this.hijoDerecho = null;
         this.hijoIzquierdo = null;
         this.data = data;
     }
 
-    public NodoÁrbol getHijoIzquierdo() {
+    public NodoArbol getHijoIzquierdo() {
         return hijoIzquierdo;
     }
 
-    public void setHijoIzquierdo(NodoÁrbol hijoIzquierdo) {
+    public void setHijoIzquierdo(NodoArbol hijoIzquierdo) {
         this.hijoIzquierdo = hijoIzquierdo;
     }
 
-    public NodoÁrbol getHijoDerecho() {
+    public NodoArbol getHijoDerecho() {
         return hijoDerecho;
     }
 
-    public void setHijoDerecho(NodoÁrbol hijoDerecho) {
+    public void setHijoDerecho(NodoArbol hijoDerecho) {
         this.hijoDerecho = hijoDerecho;
     }
 

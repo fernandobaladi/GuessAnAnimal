@@ -9,20 +9,20 @@ package proyecto2baladiinvernonpizzurro;
  *
  * @author Fernando Baladi
  */
-public class Árbol {
-    private NodoÁrbol nodoRaíz;
+public class Arbol {
+    private NodoArbol nodoRaíz;
     private int númeroDeNodos;
 
     
     //Se instancia el árbol totalmente vacío
-    public Árbol(){
+    public Arbol(){
         this.nodoRaíz = null;
         this.númeroDeNodos = 0;
     
     }
     
     
-    //El método devuelve verdadero si está vacío el árbol
+    //El método devuelve verdadero si está vacío el arbol
     public boolean esVacio(){
     
         if (númeroDeNodos == 0) {
@@ -34,7 +34,7 @@ public class Árbol {
     
     
     //Recorre en Inorden de forma recursiva
-    public void recorrerInOrden(NodoÁrbol padre){
+    public void recorrerInOrden(NodoArbol padre){
     
         if(padre!=null){
                 recorrerInOrden(padre.getHijoIzquierdo());
@@ -46,7 +46,7 @@ public class Árbol {
    
     
     //Recorre en Posorden de forma recursiva
-    public void recorrerPosOrden(NodoÁrbol padre){
+    public void recorrerPosOrden(NodoArbol padre){
     
         if(padre!=null){
                 recorrerPosOrden(padre.getHijoIzquierdo());
@@ -59,7 +59,7 @@ public class Árbol {
     
     
     //Recorre en Preorden de forma recursiva
-    public void recorrerPreOrden(NodoÁrbol padre){
+    public void recorrerPreOrden(NodoArbol padre){
     
         if(padre!=null){
                 System.out.print(padre.getData()+" ");
@@ -71,8 +71,9 @@ public class Árbol {
     
     
     //Busca desde la ráiz el nodo con el dato que se está buscando
-    public NodoÁrbol Buscar(NodoÁrbol raiz, String clave){
-        NodoÁrbol objetivo;
+    //NOTA IMPORTANTE: La primera vez que se llame este código se tiene que pasar por parámetro la raíz del árbol
+    public NodoArbol Buscar(NodoArbol raiz, String clave){
+        NodoArbol objetivo;
         if(raiz!=null){
             if(raiz.getData().equals(clave)){
                objetivo=raiz;
@@ -90,9 +91,9 @@ public class Árbol {
     
     
     //Inserta un nodo hijo en el padre que se le pase.
-    /*NOTA IMPORTANTE: Para poder agregar información de esta manera primero debe instanciarse el nodo con la información y luego ingresarla al árbol*/
-    public void InsertarNodo(NodoÁrbol padre, NodoÁrbol hijo){
-        NodoÁrbol aux;
+    /*NOTA IMPORTANTE: Para poder agregar información de esta manera primero debe instanciarse el nodo con la información y luego ingresarla al arbol*/
+    public void InsertarNodo(NodoArbol padre, NodoArbol hijo){
+        NodoArbol aux;
         if (padre!=null){
             if(padre.getHijoIzquierdo()==null){
                 padre.setHijoIzquierdo(hijo);
@@ -112,10 +113,46 @@ public class Árbol {
                 System.out.println("Posición de memoria no válida");
             }
         }
-
-
+    }
+    
+    
+    
+    /*HAY QUE PROBAR BIEN ESTOS 2 MÉTODOS DE INSERCIÓN PORQUE SE LE TIENE QUE 
+    PASAR EL PADRE COMO TIPO NODO Y SU HIJO TAMBIÉN*/ 
+    public void InsertarNodoALaDerecha(NodoArbol padre, NodoArbol hijo){
+    
+        padre.setHijoDerecho(hijo);
+    
     
     }
+    
+    public void InsertarNodoALaIzquierda(NodoArbol padre, NodoArbol hijo){
+    
+        padre.setHijoIzquierdo(hijo);
+    
+    }
+    
+    public void InsertarNodoRaíz(NodoArbol raíz){
+    
+        this.nodoRaíz = raíz;
+    
+    
+    }
+    
+    
+    public String RecorrerPorPreguntas(String datoNodo, int respuesta){
+    
+        NodoArbol auxiliar = Buscar(this.nodoRaíz, datoNodo);
+        if (respuesta == 0) {
+            return auxiliar.getHijoIzquierdo().getData();
+        }else{
+            
+            return auxiliar.getHijoDerecho().getData();
+        
+        }
+    
+    }
+    
     
    //Con este método se poda todo el árbol, dejándolo vacío
     public void Limpiar(){
@@ -126,11 +163,11 @@ public class Árbol {
     }  
 
     
-    public NodoÁrbol getNodoRaíz() {
+    public NodoArbol getNodoRaíz() {
         return nodoRaíz;
     }
 
-    public void setNodoRaíz(NodoÁrbol nodoRaíz) {
+    public void setNodoRaíz(NodoArbol nodoRaíz) {
         this.nodoRaíz = nodoRaíz;
     }
 
