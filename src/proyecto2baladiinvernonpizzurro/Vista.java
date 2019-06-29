@@ -5,6 +5,8 @@
  */
 package proyecto2baladiinvernonpizzurro;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Fernando Baladi
@@ -113,6 +115,40 @@ public class Vista extends javax.swing.JFrame {
         
         jTextField1.setText(arbol.RecorrerPorPreguntas(jTextField1.getText(), 0));
         
+        /* Con esto le preguntaremos al usuario si está bien o no la respuesta*/
+        Object[] options = {"No mi pana", "Pos claro"};
+        
+        
+        int n = JOptionPane.showOptionDialog(rootPane,
+                "¿Es ese el animal en el que piensse?",
+                "A Silly Question",
+                /*Se deja a YES_NO_OPTION para NO porque devolverá 0 y a 
+                QUESTION_MESSAGE como Sí porque devuelve 1*/
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        
+        
+        
+        if (n == JOptionPane.YES_OPTION) {
+        
+            /*Cuando responde que No es correcta la respuesta entra aquí y le 
+            pregunta con este JOptionPane de tipo Input cuál es la respuesta correcta*/
+            
+            System.out.println(n);
+            String response = JOptionPane.showInputDialog( "¿Qué animal era?");
+            if ((response != null) && (response.length() > 0)) {
+                /*Si Presiona aceptar entra en este if*/
+            }
+            
+        } else if (n == JOptionPane.NO_OPTION) {
+            System.out.println(n);
+        
+        } else {
+
+    }
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
