@@ -11,11 +11,13 @@ package proyecto2baladiinvernonpizzurro;
  */
 public class Proyecto2BaladiInvernonPizzurro {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+    
+        Vista v = new Vista();
+        v.setVisible(true);
+        
+        
     }
     
 }
