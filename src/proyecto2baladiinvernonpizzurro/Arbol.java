@@ -7,9 +7,10 @@ package proyecto2baladiinvernonpizzurro;
 
 /**
  *
- * @author Fernando Baladi
+ * @author edwardpizzurro
  */
 public class Arbol {
+    
     private NodoArbol nodoRaíz;
     private int númeroDeNodos;
 
@@ -45,7 +46,7 @@ public class Arbol {
     }
    
     
-    //Recorre en Posorden de forma recursiva
+    //Recorre en Postorden de forma recursiva
     public void recorrerPosOrden(NodoArbol padre){
     
         if(padre!=null){
@@ -132,9 +133,9 @@ public class Arbol {
     
     }
     
-    public void InsertarNodoRaíz(NodoArbol raíz){
-    
-        this.nodoRaíz = raíz;
+    public void InsertarNodoRaíz(String data){
+        //this.nodoRaíz = raíz;
+        this.nodoRaíz = new NodoArbol(data);
     
     
     }
@@ -143,8 +144,10 @@ public class Arbol {
     public String RecorrerPorPreguntas(String datoNodo, int respuesta){
     
         NodoArbol auxiliar = Buscar(this.nodoRaíz, datoNodo);
+        
         if (respuesta == 0) {
             return auxiliar.getHijoIzquierdo().getData();
+            
         }else{
             
             return auxiliar.getHijoDerecho().getData();
@@ -156,7 +159,6 @@ public class Arbol {
     
    //Con este método se poda todo el árbol, dejándolo vacío
     public void Limpiar(){
-        
         this.nodoRaíz = null;
         this.númeroDeNodos = 0;
         
@@ -178,7 +180,6 @@ public class Arbol {
     public void setNúmeroDeNodos(int númeroDeNodos) {
         this.númeroDeNodos = númeroDeNodos;
     }
-    
     
     
 }

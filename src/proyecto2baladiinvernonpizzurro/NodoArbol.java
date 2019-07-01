@@ -7,9 +7,10 @@ package proyecto2baladiinvernonpizzurro;
 
 /**
  *
- * @author Fernando Baladi
+ * @author edwardpizzurro
  */
 public class NodoArbol {
+    
     private NodoArbol hijoIzquierdo;
     private NodoArbol hijoDerecho;
     private String data; //Objeto que se le pasa al árbol
@@ -47,11 +48,9 @@ public class NodoArbol {
     
     //Metodo para validar si el nodo que se tiene es hoja
     public boolean esHoja(){
-    
         if (this.hijoDerecho == null && this.hijoIzquierdo == null) {
             return true;
         }
-        
         return false;
         
     }

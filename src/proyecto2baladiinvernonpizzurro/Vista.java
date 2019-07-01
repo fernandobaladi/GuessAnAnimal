@@ -19,6 +19,11 @@ public class Vista extends javax.swing.JFrame {
     int cont=1;
     String cancel = null;    
     
+    NodoArbol nodoAuxiliar; //para guardar el ultimo nodo en el que se quedo, para poder desconectarlo del arbol
+    //y conectarlo de nuevo pero con el arbol actualizado
+    
+    boolean ultimaOpcionEscogida = false; // true es derecha, false es izquierda
+    
     /**
      * Creates new form Vista
      */
@@ -45,7 +50,8 @@ public class Vista extends javax.swing.JFrame {
         arbol.InsertarNodoALaDerecha(nodoRaíz, nodoHijo2);
         
         QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
-            
+
+         nodoAuxiliar = arbol.getNodoRaíz();//inicialmente es la raiz del arbol   
     
     }
 
@@ -259,12 +265,112 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
+        
+        String texto = arbol.RecorrerPorPreguntas(jTextField1.getText(), opcionEscogida);
+        jTextField1.setText(texto);
+        ultimaOpcionEscogida = ultimaEscogida;
+        
+        
+        if (jTextField1.getText().charAt(0) == '*') {//ese asterico es para verificar si es el ultimo nodo del arbol
+            //se puede sustituir por un espacio para que no se vea, pero por ahora le puse eso.
+            
+            NodoArbol nodo = arbol.Buscar(arbol.getNodoRaíz(), texto);
+            
+            /* Con esto le preguntaremos al usuario si está bien o no la respuesta*/
+            Object[] options = {"No mi pana", "Pos claro"};
+
+
+            int n = JOptionPane.showOptionDialog(rootPane,
+                    "¿Es ese el animal en el que pensaste?",
+                    "A Silly Question",
+                    /*Se deja a YES_NO_OPTION para NO porque devolverá 0 y a 
+                    QUESTION_MESSAGE como Sí porque devuelve 1*/
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+
+
+
+            if (n == JOptionPane.YES_OPTION) {
+
+                /*Cuando responde que No es correcta la respuesta entra aquí y le 
+                pregunta con este JOptionPane de tipo Input cuál es la respuesta correcta*/
+
+                System.out.println(n);
+                String response = JOptionPane.showInputDialog( "¿Qué animal era?");
+                
+                response = "*"+response; // aqui le anado el asterico para luego saber que es el ultimo nodo
+                
+                if ((response != null) && (response.length() > 0)) {
+
+                    /*Si Presiona aceptar entra en este if*/
+                    
+                    String diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + response);
+                    
+                    String respuestaEscogida = JOptionPane.showInputDialog("Si el animal fuera un " + nodo.getData() + " cuál sería la respuesta?"
+                            + " (s para 'si' y n para 'n')");
+                    //respuesta escogida puede ser "s" o "n"
+                    
+                    
+                    //ESTO ES UN EJEMPLO DE COMO LO PUEDE RESPONDER EL USUARIO
+                    //response = pato
+                    //diferencia = puede nadar
+                    //respuestaEscogida = n, porque el raton no nada
+                    //nodoAuxiliar es la raiz en el primer caso
+                    
+                    NodoArbol nuevoNodo = new NodoArbol(diferencia);
+                    
+                    if (ultimaOpcionEscogida == false) {
+                        
+                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
+                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
+                    
+                    } else {
+                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
+                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
+                    }
+                    
+                    if (respuestaEscogida.equals("n")) {
+                        nuevoNodo.setHijoIzquierdo(nodo);
+                        NodoArbol otroHijo = new NodoArbol(response);
+                        nuevoNodo.setHijoDerecho(otroHijo);
+                        
+                    } else {
+                        NodoArbol otroHijo = new NodoArbol(response);
+                        nuevoNodo.setHijoIzquierdo(otroHijo);
+                        nuevoNodo.setHijoDerecho(nodo);    
+                    }
+                    
+                    
+                    jTextField1.setText(arbol.getNodoRaíz().getData());
+
+                }
+
+            } else if (n == JOptionPane.NO_OPTION) {
+
+                System.out.println("Respuesta: SI");
+                jTextField1.setText(arbol.getNodoRaíz().getData());
+
+            } else {
+                
+            }
+        
+            
+            
+        } else {//if grande
+            nodoAuxiliar = arbol.Buscar(arbol.getNodoRaíz(), texto);
+        }
+    }
     private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
         
         
             QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 1)); 
             
             cont ++;
+            formarElArbol(true, 1);
         
         
     }//GEN-LAST:event_YesjButtonActionPerformed
@@ -275,6 +381,8 @@ public class Vista extends javax.swing.JFrame {
         QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 0));
         
         cont ++;
+
+        formarElArbol(false, 0);
         
 //        /* Con esto le preguntaremos al usuario si está bien o no la respuesta*/
 //        Object[] options = {"No mi pana", "Pos claro"};
