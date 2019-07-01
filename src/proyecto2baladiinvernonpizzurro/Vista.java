@@ -364,23 +364,23 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
     }
     private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
         
-        
+            formarElArbol(true, 1);
             QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 1)); 
             
             cont ++;
-            formarElArbol(true, 1);
+            //aqui
         
         
     }//GEN-LAST:event_YesjButtonActionPerformed
 
     private void NojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NojButtonActionPerformed
         
-        
+        formarElArbol(false, 0);
         QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 0));
         
         cont ++;
-
-        formarElArbol(false, 0);
+        //aqui
+        
         
 //        /* Con esto le preguntaremos al usuario si está bien o no la respuesta*/
 //        Object[] options = {"No mi pana", "Pos claro"};
