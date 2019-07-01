@@ -33,10 +33,8 @@ public class Vista extends javax.swing.JFrame {
         GamejPanel.setVisible(false);
         QuestionNumberjLabel.setText("Pregunta número " + cont);
         
-        NodoArbol nodoRaíz = new NodoArbol("¿Vuela?");
-        NodoArbol nodoHijo = new NodoArbol("Es un Ratón");
-        NodoArbol nodoHijo2 = new NodoArbol("Es una paloma");
-        
+        NodoArbol nodoHijo = new NodoArbol("*Ratón");
+        NodoArbol nodoHijo2 = new NodoArbol("*Paloma");
         
         
         /*
@@ -45,13 +43,13 @@ public class Vista extends javax.swing.JFrame {
         NOTA IMPORTANTE: 0 ES NEGATIVO Y 1 ES AFIRMATIVO
         */
         
-        arbol.InsertarNodoRaíz(nodoRaíz);
-        arbol.InsertarNodoALaIzquierda(nodoRaíz, nodoHijo);
-        arbol.InsertarNodoALaDerecha(nodoRaíz, nodoHijo2);
+        arbol.InsertarNodoRaíz("¿Vuela?");
+        arbol.InsertarNodoALaIzquierda(arbol.getNodoRaíz(), nodoHijo);
+        arbol.InsertarNodoALaDerecha(arbol.getNodoRaíz(), nodoHijo2);
         
         QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
 
-         nodoAuxiliar = arbol.getNodoRaíz();//inicialmente es la raiz del arbol   
+        nodoAuxiliar = arbol.getNodoRaíz();//inicialmente es la raiz del arbol   
     
     }
 
@@ -267,12 +265,12 @@ public class Vista extends javax.swing.JFrame {
 
 public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
         
-        String texto = arbol.RecorrerPorPreguntas(jTextField1.getText(), opcionEscogida);
-        jTextField1.setText(texto);
+        String texto = arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), opcionEscogida);
+        QuestionsjLabel.setText(texto);
         ultimaOpcionEscogida = ultimaEscogida;
         
         
-        if (jTextField1.getText().charAt(0) == '*') {//ese asterico es para verificar si es el ultimo nodo del arbol
+        if (QuestionsjLabel.getText().charAt(0) == '*') {//ese asterico es para verificar si es el ultimo nodo del arbol
             //se puede sustituir por un espacio para que no se vea, pero por ahora le puse eso.
             
             NodoArbol nodo = arbol.Buscar(arbol.getNodoRaíz(), texto);
@@ -345,14 +343,14 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                     }
                     
                     
-                    jTextField1.setText(arbol.getNodoRaíz().getData());
+                    QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
 
                 }
 
             } else if (n == JOptionPane.NO_OPTION) {
 
                 System.out.println("Respuesta: SI");
-                jTextField1.setText(arbol.getNodoRaíz().getData());
+                QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
 
             } else {
                 
