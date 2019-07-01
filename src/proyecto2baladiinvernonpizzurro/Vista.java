@@ -17,7 +17,7 @@ public class Vista extends javax.swing.JFrame {
     
     private Arbol arbol = new Arbol();
     int cont=1;
-    String cancel = null;    
+    String userAnimal;    
     
     NodoArbol nodoAuxiliar; //para guardar el ultimo nodo en el que se quedo, para poder desconectarlo del arbol
     //y conectarlo de nuevo pero con el arbol actualizado
@@ -269,97 +269,223 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
         QuestionsjLabel.setText(texto);
         ultimaOpcionEscogida = ultimaEscogida;
         
+        String diferencia, respuestaEscogida;
+        boolean animalEncontrado = false, animalPensado = false, diferenciaAnimales = false, verificar4 = false;
+        
         
         if (QuestionsjLabel.getText().charAt(0) == '*') {//ese asterico es para verificar si es el ultimo nodo del arbol
             //se puede sustituir por un espacio para que no se vea, pero por ahora le puse eso.
             
             NodoArbol nodo = arbol.Buscar(arbol.getNodoRaíz(), texto);
             
-            /* Con esto le preguntaremos al usuario si está bien o no la respuesta*/
-            Object[] options = {"No mi pana", "Pos claro"};
-
-
-            int n = JOptionPane.showOptionDialog(rootPane,
-                    "¿Es ese el animal en el que pensaste?",
-                    "A Silly Question",
-                    /*Se deja a YES_NO_OPTION para NO porque devolverá 0 y a 
-                    QUESTION_MESSAGE como Sí porque devuelve 1*/
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[0]);
-
-
-
-            if (n == JOptionPane.YES_OPTION) {
+        do{    
+            int n = JOptionPane.showConfirmDialog(null, "¿Este es el animal en el que piensas?", "¿Animal encontrado?", YES_NO_OPTION);
+                
+            if (n == 1) {
 
                 /*Cuando responde que No es correcta la respuesta entra aquí y le 
                 pregunta con este JOptionPane de tipo Input cuál es la respuesta correcta*/
-
-                System.out.println(n);
-                String response = JOptionPane.showInputDialog( "¿Qué animal era?");
                 
-                response = "*"+response; // aqui le anado el asterico para luego saber que es el ultimo nodo
+                animalEncontrado = true;
+
+                do {
+                    String newAnimal = JOptionPane.showInputDialog( "¿Cuál es el animal en el que pensabas?");
+                                       
+
+                    if (newAnimal ==  null) {
+
+                        animalPensado = false;
+                    }
+                    else if(newAnimal.isEmpty()){
+
+                        JOptionPane.showMessageDialog(null, "No puedes dejar el campo vacío");
+                        animalPensado = false;
+                    }
+                    else {
+
+                        newAnimal = "*"+newAnimal; // aqui le anado el asterico para luego saber que es el ultimo nodo
+                        userAnimal = newAnimal;
+                        animalPensado= true;
+                    }
+                } while (animalPensado == false);
+                                 
+                do{
+                    diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + userAnimal);
+                    
+                    if (diferencia ==  null) {
+
+                        diferenciaAnimales = false;
+                    }
+                    else if(diferencia.isEmpty()){
+
+                        JOptionPane.showMessageDialog(null, "No puedes dejar el campo vacío");
+                        diferenciaAnimales = false;
+                    }
+                    else {
+
+                        diferenciaAnimales= true;
+                    }
+                }while (diferenciaAnimales == false);
+
+                do{
+                    respuestaEscogida = JOptionPane.showInputDialog("Si el animal fuera un " + nodo.getData() + " cuál sería la respuesta?"
+                        + " (s para 'si' y n para 'no')");
+                    
+                    if (respuestaEscogida ==  null) {
+
+                        verificar4 = false;
+                    }
+                    else if(respuestaEscogida.isEmpty()){
+
+                        JOptionPane.showMessageDialog(null, "No puedes dejar el campo vacío");
+                        verificar4 = false;
+                    }
+                    else if (respuestaEscogida.equals("s") || respuestaEscogida.equals("n")){
+                    
+                        verificar4 = true;
+                    }
+                    else {
+
+                        JOptionPane.showMessageDialog(null, "Respuesta inválida");
+                        verificar4 = false;
+                    }
+                } while (verificar4 == false);
                 
-                if ((response != null) && (response.length() > 0)) {
+                //respuesta escogida puede ser "s" o "n"
 
-                    /*Si Presiona aceptar entra en este if*/
-                    
-                    String diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + response);
-                    
-                    String respuestaEscogida = JOptionPane.showInputDialog("Si el animal fuera un " + nodo.getData() + " cuál sería la respuesta?"
-                            + " (s para 'si' y n para 'n')");
-                    //respuesta escogida puede ser "s" o "n"
-                    
-                    
-                    //ESTO ES UN EJEMPLO DE COMO LO PUEDE RESPONDER EL USUARIO
-                    //response = pato
-                    //diferencia = puede nadar
-                    //respuestaEscogida = n, porque el raton no nada
-                    //nodoAuxiliar es la raiz en el primer caso
-                    
-                    NodoArbol nuevoNodo = new NodoArbol(diferencia);
-                    
-                    if (ultimaOpcionEscogida == false) {
-                        
-                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
-                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
-                    
-                    } else {
-                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
-                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
-                    }
-                    
-                    if (respuestaEscogida.equals("n")) {
-                        nuevoNodo.setHijoIzquierdo(nodo);
-                        NodoArbol otroHijo = new NodoArbol(response);
-                        nuevoNodo.setHijoDerecho(otroHijo);
-                        
-                    } else {
-                        NodoArbol otroHijo = new NodoArbol(response);
-                        nuevoNodo.setHijoIzquierdo(otroHijo);
-                        nuevoNodo.setHijoDerecho(nodo);    
-                    }
-                    
-                    
-                    QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
 
+                //ESTO ES UN EJEMPLO DE COMO LO PUEDE RESPONDER EL USUARIO
+                //response = pato
+                //diferencia = puede nadar
+                //respuestaEscogida = n, porque el raton no nada
+                //nodoAuxiliar es la raiz en el primer caso
+
+                NodoArbol nuevoNodo = new NodoArbol(diferencia);
+
+                if (ultimaOpcionEscogida == false) {
+
+                    arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
+                    arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
+
+                } else {
+                    arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
+                    arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
                 }
 
-            } else if (n == JOptionPane.NO_OPTION) {
+                if (respuestaEscogida.equals("n")) {
+                    nuevoNodo.setHijoIzquierdo(nodo);
+                    NodoArbol otroHijo = new NodoArbol(userAnimal);
+                    nuevoNodo.setHijoDerecho(otroHijo);
 
-                System.out.println("Respuesta: SI");
+                } else {
+                    NodoArbol otroHijo = new NodoArbol(userAnimal);
+                    nuevoNodo.setHijoIzquierdo(otroHijo);
+                    nuevoNodo.setHijoDerecho(nodo);    
+                }
+
+
                 QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
-
-            } else {
                 
+            } 
+            else if (n == 0) {
+                
+                animalEncontrado = true;
+                
+                int newGame = JOptionPane.showConfirmDialog(null, "¿Deseas volver a jugar?", "Fin de la partida!", YES_NO_OPTION);
+
+                if (newGame == 0) {
+
+                    //Aca deben colocar la funcion para que comience el juego de nuevo 
+                    QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
+                }
+            } 
+            else {
+                
+                animalEncontrado = false;
+
             }
-        
-            
-            
-        } else {//if grande
-            nodoAuxiliar = arbol.Buscar(arbol.getNodoRaíz(), texto);
+        }while (animalEncontrado == false);        
+
+//            /* Con esto le preguntaremos al usuario si está bien o no la respuesta*/
+//            Object[] options = {"No mi pana", "Pos claro"};
+//
+//
+//            int n = JOptionPane.showOptionDialog(rootPane,
+//                    "¿Es ese el animal en el que pensaste?",
+//                    "A Silly Question",
+//                    /*Se deja a YES_NO_OPTION para NO porque devolverá 0 y a 
+//                    QUESTION_MESSAGE como Sí porque devuelve 1*/
+//                    JOptionPane.YES_NO_OPTION,
+//                    JOptionPane.QUESTION_MESSAGE,
+//                    null,
+//                    options,
+//                    options[0]);
+
+//            if (n == JOptionPane.YES_OPTION) {
+//
+//                /*Cuando responde que No es correcta la respuesta entra aquí y le 
+//                pregunta con este JOptionPane de tipo Input cuál es la respuesta correcta*/
+//
+//                System.out.println(n);
+//                String response = JOptionPane.showInputDialog( "¿Qué animal era?");
+//                
+//                response = "*"+response; // aqui le anado el asterico para luego saber que es el ultimo nodo
+//                
+//                if ((response != null) && (response.length() > 0)) {
+//
+//                    /*Si Presiona aceptar entra en este if*/
+//                    
+//                    String diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + response);
+//                    
+//                    String respuestaEscogida = JOptionPane.showInputDialog("Si el animal fuera un " + nodo.getData() + " cuál sería la respuesta?"
+//                            + " (s para 'si' y n para 'n')");
+//                    //respuesta escogida puede ser "s" o "n"
+//                    
+//                    
+//                    //ESTO ES UN EJEMPLO DE COMO LO PUEDE RESPONDER EL USUARIO
+//                    //response = pato
+//                    //diferencia = puede nadar
+//                    //respuestaEscogida = n, porque el raton no nada
+//                    //nodoAuxiliar es la raiz en el primer caso
+//                    
+//                    NodoArbol nuevoNodo = new NodoArbol(diferencia);
+//                    
+//                    if (ultimaOpcionEscogida == false) {
+//                        
+//                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
+//                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
+//                    
+//                    } else {
+//                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
+//                        arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
+//                    }
+//                    
+//                    if (respuestaEscogida.equals("n")) {
+//                        nuevoNodo.setHijoIzquierdo(nodo);
+//                        NodoArbol otroHijo = new NodoArbol(response);
+//                        nuevoNodo.setHijoDerecho(otroHijo);
+//                        
+//                    } else {
+//                        NodoArbol otroHijo = new NodoArbol(response);
+//                        nuevoNodo.setHijoIzquierdo(otroHijo);
+//                        nuevoNodo.setHijoDerecho(nodo);    
+//                    }
+//                    
+//                    
+//                    QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
+//
+//                }
+//
+//            } else if (n == JOptionPane.NO_OPTION) {
+//
+//                System.out.println("Respuesta: SI");
+//                QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
+//
+//            } else {
+//                
+//            }
+//        } else {//if grande
+//            nodoAuxiliar = arbol.Buscar(arbol.getNodoRaíz(), texto);
         }
     }
     private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
@@ -397,49 +523,49 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 //                options,
 //                options[0]);
 
-        int n = JOptionPane.showConfirmDialog(null, "¿Este es el animal en el que piensas?", "¿Animal encontrado?", YES_NO_OPTION);
-        
-        
-        if (n == 1) {
-        
-            /*Cuando responde que No es correcta la respuesta entra aquí y le 
-            pregunta con este JOptionPane de tipo Input cuál es la respuesta correcta*/
-            
-            boolean verificar = false;
-                        
-            do {
-                String newAnimal = JOptionPane.showInputDialog( "¿Cuál es el animal en el que pensabas?");
-                
-                if (newAnimal ==  null) {
-                    
-                    verificar = false;
-                }
-                else if(newAnimal.isEmpty()){
-                
-                    JOptionPane.showMessageDialog(null, "No puedes dejar el campo vacío. Por favor introduce el nombre de tu animal");
-                    verificar = false;
-                }
-                else {
-                    
-                    verificar= true;
-                }
-            } while (verificar == false);
-        } 
-        else if (n == 0) {
-            
-            int newGame = JOptionPane.showConfirmDialog(null, "¿Deseas volver a jugar?", "Fin de la partida!", YES_NO_OPTION);
-            
-            if (newGame == 0) {
-            
-                //Aca deben colocar la funcion para que comience el juego de nuevo 
-            }
-            
-        
-        } 
-        else {
-            
-            
-    }
+//        int n = JOptionPane.showConfirmDialog(null, "¿Este es el animal en el que piensas?", "¿Animal encontrado?", YES_NO_OPTION);
+//        
+//        
+//        if (n == 1) {
+//        
+//            /*Cuando responde que No es correcta la respuesta entra aquí y le 
+//            pregunta con este JOptionPane de tipo Input cuál es la respuesta correcta*/
+//            
+//            boolean verificar = false;
+//                        
+//            do {
+//                String newAnimal = JOptionPane.showInputDialog( "¿Cuál es el animal en el que pensabas?");
+//                
+//                if (newAnimal ==  null) {
+//                    
+//                    verificar = false;
+//                }
+//                else if(newAnimal.isEmpty()){
+//                
+//                    JOptionPane.showMessageDialog(null, "No puedes dejar el campo vacío. Por favor introduce el nombre de tu animal");
+//                    verificar = false;
+//                }
+//                else {
+//                    
+//                    verificar= true;
+//                }
+//            } while (verificar == false);
+//        } 
+//        else if (n == 0) {
+//            
+//            int newGame = JOptionPane.showConfirmDialog(null, "¿Deseas volver a jugar?", "Fin de la partida!", YES_NO_OPTION);
+//            
+//            if (newGame == 0) {
+//            
+//                //Aca deben colocar la funcion para que comience el juego de nuevo 
+//            }
+//                        
+//        
+//        } 
+//        else {
+//            
+//            
+//    }
         
         
     }//GEN-LAST:event_NojButtonActionPerformed
