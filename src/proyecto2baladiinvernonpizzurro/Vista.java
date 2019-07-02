@@ -17,7 +17,7 @@ public class Vista extends javax.swing.JFrame {
     
     private Arbol arbol = new Arbol();
     int cont=1;
-    String userAnimal;    
+      
     
     NodoArbol nodoAuxiliar; //para guardar el ultimo nodo en el que se quedo, para poder desconectarlo del arbol
     //y conectarlo de nuevo pero con el arbol actualizado
@@ -129,9 +129,9 @@ public class Vista extends javax.swing.JFrame {
             GamejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GamejPanelLayout.createSequentialGroup()
                 .addComponent(QuestionNumberjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(QuestionsjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(QuestionsjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(295, 295, 295)
                 .addGroup(GamejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NojButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(YesjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -269,7 +269,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
         QuestionsjLabel.setText(texto);
         ultimaOpcionEscogida = ultimaEscogida;
         
-        String diferencia, respuestaEscogida;
+        String diferencia, respuestaEscogida, newAnimal;  ;
         boolean animalEncontrado = false, animalPensado = false, diferenciaAnimales = false, verificar4 = false;
         
         
@@ -289,7 +289,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                 animalEncontrado = true;
 
                 do {
-                    String newAnimal = JOptionPane.showInputDialog( "¿Cuál es el animal en el que pensabas?");
+                    newAnimal = JOptionPane.showInputDialog( "¿Cuál es el animal en el que pensabas?");
                                        
 
                     if (newAnimal ==  null) {
@@ -304,13 +304,13 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                     else {
 
                         newAnimal = "*"+newAnimal; // aqui le anado el asterico para luego saber que es el ultimo nodo
-                        userAnimal = newAnimal;
+                                                
                         animalPensado= true;
                     }
                 } while (animalPensado == false);
                                  
                 do{
-                    diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + userAnimal);
+                    diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + newAnimal);
                     
                     if (diferencia ==  null) {
 
@@ -326,6 +326,8 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                         diferenciaAnimales= true;
                     }
                 }while (diferenciaAnimales == false);
+                
+                 
 
                 do{
                     respuestaEscogida = JOptionPane.showInputDialog("Si el animal fuera un " + nodo.getData() + " cuál sería la respuesta?"
@@ -342,6 +344,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                     }
                     else if (respuestaEscogida.equals("s") || respuestaEscogida.equals("n")){
                     
+                                                
                         verificar4 = true;
                     }
                     else {
@@ -360,44 +363,49 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                 //respuestaEscogida = n, porque el raton no nada
                 //nodoAuxiliar es la raiz en el primer caso
 
+                System.out.println("res " + respuestaEscogida);
+                
                 NodoArbol nuevoNodo = new NodoArbol(diferencia);
 
                 if (ultimaOpcionEscogida == false) {
-
+                    System.out.println("perro");
                     arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
                     arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
 
                 } else {
+                    System.out.println("hola");
                     arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
                     arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
                 }
 
                 if (respuestaEscogida.equals("n")) {
+                    System.out.println("gato");
                     nuevoNodo.setHijoIzquierdo(nodo);
-                    NodoArbol otroHijo = new NodoArbol(userAnimal);
+                    NodoArbol otroHijo = new NodoArbol(newAnimal);
                     nuevoNodo.setHijoDerecho(otroHijo);
 
                 } else {
-                    NodoArbol otroHijo = new NodoArbol(userAnimal);
+                    System.out.println("como");
+                    NodoArbol otroHijo = new NodoArbol(newAnimal);
                     nuevoNodo.setHijoIzquierdo(otroHijo);
                     nuevoNodo.setHijoDerecho(nodo);    
                 }
-
-
-                QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
                 
+                QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
+                               
             } 
             else if (n == 0) {
+                                                
+                QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
                 
+//                int newGame = JOptionPane.showConfirmDialog(null, "¿Deseas volver a jugar?", "Fin de la partida!", YES_NO_OPTION);
+//
+//                if (newGame == 0) {
+//
+//                    //Aca deben colocar la funcion para que comience el juego de nuevo 
+//                    QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
+//                }
                 animalEncontrado = true;
-                
-                int newGame = JOptionPane.showConfirmDialog(null, "¿Deseas volver a jugar?", "Fin de la partida!", YES_NO_OPTION);
-
-                if (newGame == 0) {
-
-                    //Aca deben colocar la funcion para que comience el juego de nuevo 
-                    QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
-                }
             } 
             else {
                 
@@ -486,6 +494,11 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 //            }
 //        } else {//if grande
 //            nodoAuxiliar = arbol.Buscar(arbol.getNodoRaíz(), texto);
+        }
+        
+        else {
+        
+            nodoAuxiliar = arbol.Buscar(arbol.getNodoRaíz(), texto);
         }
     }
     private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
