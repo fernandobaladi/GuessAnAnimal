@@ -473,7 +473,15 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
     private void DeletejButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletejButtonActionPerformed
         if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas borrar la información agregada y volver a la base de conocimientos predeterminada? " ,
                 "Borrar base de conocimientos extendida", YES_NO_OPTION) == 0){
-        
+            NodoArbol hijoDerecho = new NodoArbol("*Paloma");
+            NodoArbol hijoIzquierdo = new NodoArbol("*Ratón");
+            arbol.getNodoRaíz().setHijoDerecho(hijoDerecho);
+            arbol.getNodoRaíz().setHijoIzquierdo(hijoIzquierdo);
+            arbol.getNodoRaíz().getHijoIzquierdo().setHijoDerecho(null);
+            arbol.getNodoRaíz().getHijoIzquierdo().setHijoIzquierdo(null);
+            arbol.getNodoRaíz().getHijoDerecho().setHijoDerecho(null);
+            arbol.getNodoRaíz().getHijoDerecho().setHijoIzquierdo(null);
+            arbol.setNúmeroDeNodos(3);
             //Acá deben colocar lo que debe suceder para borrar todo lo que agregó el usuario
         }
     }//GEN-LAST:event_DeletejButtonActionPerformed
