@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,7 +26,7 @@ import javax.swing.JTextField;
 
 public class CreateLabelDynamically extends JFrame {
     CustomJPanel Jpan;
-    //JScrollPane ScrollPane;
+    JScrollPane ScrollPane;
     Arbol arbol;
     
     
@@ -32,23 +34,38 @@ public class CreateLabelDynamically extends JFrame {
         
         this.arbol = arbol;
         Jpan = new CustomJPanel(arbol);
-        //ScrollPane = new JScrollPane ();
+        ScrollPane = new JScrollPane ();
         //setLayout(null);
         //Jpan.setLayout(null);
-        //Jpan.setPreferredSize(new Dimension (1000,1000));
+        Jpan.setPreferredSize(new Dimension (2000,2000));
         //Jpan.setBounds(100, 100, 1500, 1000);
         Jpan.setOpaque(true);
         Jpan.setBackground( Color.white);
         //ScrollPane.setOpaque(true);
         setBackground(Color.white);
         //ScrollPane.setBackground(Color.white);
-        //ScrollPane.setBounds(50, 50, 900, 900);
+        ScrollPane.setBounds(50, 50, 900, 900);
+        ScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener (){
         
-        //ScrollPane.setViewportView(Jpan);
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                repaint ();
+            }
+        });
         
-        //add(ScrollPane);
+        ScrollPane.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener (){
         
-        add(Jpan);
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                repaint ();
+            }
+        });
+        
+        ScrollPane.setViewportView(Jpan);
+        
+        add(ScrollPane);
+        
+        //add(Jpan);
         
         
     }
