@@ -163,7 +163,6 @@ public class Arbol {
         this.númeroDeNodos = 0;
         
     }  
-
     
     public NodoArbol getNodoRaíz() {
         return nodoRaíz;
@@ -180,6 +179,11 @@ public class Arbol {
     public void setNúmeroDeNodos(int númeroDeNodos) {
         this.númeroDeNodos = númeroDeNodos;
     }
+    
+    public int getheight(NodoArbol root) {
+		if (root == null)return 0;
+		return Math.max(getheight(root.getHijoIzquierdo()), getheight(root.getHijoDerecho())) + 1;
+	}
     
     
 }

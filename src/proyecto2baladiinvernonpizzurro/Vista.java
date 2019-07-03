@@ -74,10 +74,15 @@ public class Vista extends javax.swing.JFrame {
         ExitjButton = new javax.swing.JButton();
         DeletejButton = new javax.swing.JButton();
         ShowjButton = new javax.swing.JButton();
+        GamejPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(900, 800));
+        setPreferredSize(new java.awt.Dimension(900, 800));
+        setResizable(false);
 
         GamejPanel.setBackground(new java.awt.Color(243, 211, 184));
+        GamejPanel.setPreferredSize(new java.awt.Dimension(600, 650));
 
         NojButton.setBackground(new java.awt.Color(249, 173, 107));
         NojButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -129,13 +134,13 @@ public class Vista extends javax.swing.JFrame {
             GamejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GamejPanelLayout.createSequentialGroup()
                 .addComponent(QuestionNumberjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(QuestionsjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(295, 295, 295)
                 .addGroup(GamejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NojButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(YesjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38))
+                .addGap(47, 47, 47))
         );
 
         jPanel2.setBackground(new java.awt.Color(243, 211, 184));
@@ -209,17 +214,13 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ShowjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeletejButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ExitjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LoadInfojButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SavejButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StartjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DeletejButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ShowjButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,11 +233,25 @@ public class Vista extends javax.swing.JFrame {
                 .addComponent(SavejButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(DeletejButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(45, 45, 45)
                 .addComponent(ShowjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ExitjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
+        );
+
+        GamejPanel1.setBackground(new java.awt.Color(243, 211, 184));
+        GamejPanel1.setPreferredSize(new java.awt.Dimension(600, 650));
+
+        javax.swing.GroupLayout GamejPanel1Layout = new javax.swing.GroupLayout(GamejPanel1);
+        GamejPanel1.setLayout(GamejPanel1Layout);
+        GamejPanel1Layout.setHorizontalGroup(
+            GamejPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+        GamejPanel1Layout.setVerticalGroup(
+            GamejPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -245,19 +260,22 @@ public class Vista extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(GamejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(GamejPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(GamejPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(GamejPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GamejPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -293,8 +311,10 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 
 
                         if (newAnimal ==  null) {
-
-                            animalPensado = false;
+                            
+                            JOptionPane.showMessageDialog(null, "Debes colocar una respuesta para continuar");
+                            
+                                animalPensado = false;
                         }
                         else if(newAnimal.isEmpty()){
 
@@ -314,6 +334,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 
                         if (diferencia ==  null) {
 
+                            JOptionPane.showMessageDialog(null, "Debes colocar una respuesta para continuar");
                             diferenciaAnimales = false;
                         }
                         else if(diferencia.isEmpty()){
@@ -335,6 +356,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 
                         if (respuestaEscogida ==  null) {
 
+                            JOptionPane.showMessageDialog(null, "Debes colocar una respuesta para continuar");
                             verificar4 = false;
                         }
                         else if(respuestaEscogida.isEmpty()){
@@ -362,44 +384,38 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                     //diferencia = puede nadar
                     //respuestaEscogida = n, porque el raton no nada
                     //nodoAuxiliar es la raiz en el primer caso
-
-                    System.out.println("res " + respuestaEscogida);
-
+                    
                     NodoArbol nuevoNodo = new NodoArbol(diferencia);
 
-                    System.out.println("dif " + diferencia);
-
                     if (ultimaOpcionEscogida == false) {
-                        System.out.println("perro");
+                        
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
 
                     } else {
-                        System.out.println("hola");
+                        
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
                     }
 
                     if (respuestaEscogida.equals("n")) {
-                        System.out.println("gato");
+                        
                         nuevoNodo.setHijoIzquierdo(nodo);
                         NodoArbol otroHijo = new NodoArbol(newAnimal);
                         nuevoNodo.setHijoDerecho(otroHijo);
 
                     } else {
-                        System.out.println("como");
+                        
                         NodoArbol otroHijo = new NodoArbol(newAnimal);
                         nuevoNodo.setHijoIzquierdo(otroHijo);
                         nuevoNodo.setHijoDerecho(nodo);    
                     }
-                    System.out.println("arbol " + arbol.getNodoRaíz().getData());
+                    
                     QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
-                    System.out.println("arbol2 " + arbol.getNodoRaíz().getData());
+                    
 
                 } 
                 else if (n == 0) {
-
-                    //QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
 
                     int newGame = JOptionPane.showConfirmDialog(null, "¿Deseas volver a jugar?", "Fin de la partida!", YES_NO_OPTION);
     
@@ -422,27 +438,6 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
             nodoAuxiliar = arbol.Buscar(arbol.getNodoRaíz(), texto);
         }
     }
-    private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
-        
-            formarElArbol(true, 1);
-            //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 1)); 
-            
-            cont ++;
-            //aqui
-        
-        
-    }//GEN-LAST:event_YesjButtonActionPerformed
-
-    private void NojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NojButtonActionPerformed
-        
-        formarElArbol(false, 0);
-        //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 0));
-        
-        cont ++;
-        
-        
-    }//GEN-LAST:event_NojButtonActionPerformed
-
     private void StartjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartjButtonActionPerformed
        
         GamejPanel.setVisible(true);
@@ -484,8 +479,31 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
     }//GEN-LAST:event_DeletejButtonActionPerformed
 
     private void ShowjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowjButtonActionPerformed
-        // TODO add your handling code here:
+        
+        CreateLabelDynamically c = new CreateLabelDynamically(arbol);
+        c.setTitle("Base de conocimientos completa");
+        c.setSize(1000,1000);
+        c.setVisible(true);
     }//GEN-LAST:event_ShowjButtonActionPerformed
+
+    private void NojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NojButtonActionPerformed
+
+        formarElArbol(false, 0);
+        //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 0));
+
+        cont ++;
+
+    }//GEN-LAST:event_NojButtonActionPerformed
+
+    private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
+
+        formarElArbol(true, 1);
+        //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 1));
+
+        cont ++;
+        //aqui
+
+    }//GEN-LAST:event_YesjButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -526,6 +544,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
     private javax.swing.JButton DeletejButton;
     private javax.swing.JButton ExitjButton;
     private javax.swing.JPanel GamejPanel;
+    private javax.swing.JPanel GamejPanel1;
     private javax.swing.JButton LoadInfojButton;
     private javax.swing.JButton NojButton;
     private javax.swing.JLabel QuestionNumberjLabel;
