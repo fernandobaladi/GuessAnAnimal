@@ -35,6 +35,7 @@ public class CreateLabelDynamically extends JFrame {
         this.arbol = arbol;
         Jpan = new CustomJPanel(arbol);
         ScrollPane = new JScrollPane ();
+        
         //setLayout(null);
         //Jpan.setLayout(null);
         Jpan.setPreferredSize(new Dimension (2000,2000));
