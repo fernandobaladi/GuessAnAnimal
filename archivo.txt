@@ -1,0 +1,2 @@
+¿Vuela?,*Ratón,tiene plumas,*Mariposa,*Paloma
+*Ratón,¿Vuela?,*Mariposa,tiene plumas,*Paloma

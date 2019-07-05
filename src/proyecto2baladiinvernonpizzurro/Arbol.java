@@ -5,6 +5,9 @@
  */
 package proyecto2baladiinvernonpizzurro;
 
+import java.io.File;
+import java.util.LinkedList;
+
 /**
  *
  * @author edwardpizzurro
@@ -156,6 +159,26 @@ public class Arbol {
     
     }
     
+    public void guardarPreorden(LinkedList<String> lista, NodoArbol padre){
+
+        if(padre!=null){
+                lista.add(padre.getData());
+                guardarPreorden(lista, padre.getHijoIzquierdo());
+                guardarPreorden(lista, padre.getHijoDerecho());
+        }
+        
+    }
+    
+    public void guardarInorden(LinkedList<String> lista, NodoArbol padre){
+        
+        if (padre!=null) {
+         
+            guardarInorden(lista, padre.getHijoIzquierdo());
+            lista.add(padre.getData());
+            guardarInorden(lista, padre.getHijoDerecho());
+        }
+    
+    }
     
    //Con este método se poda todo el árbol, dejándolo vacío
     public void Limpiar(){
