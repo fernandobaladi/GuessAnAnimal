@@ -32,7 +32,7 @@ public class Vista extends javax.swing.JFrame {
     NodoArbol nodoAuxiliar; //para guardar el ultimo nodo en el que se quedo, para poder desconectarlo del arbol
     //y conectarlo de nuevo pero con el arbol actualizado
     
-    boolean ultimaOpcionEscogida = false; // true es derecha, false es izquierda
+    //boolean ultimaOpcionEscogida = false; // true es derecha, false es izquierda
     
     /**
      * Creates new form Vista
@@ -291,11 +291,11 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
+public void formarElArbol(int opcionEscogida) {
         
         String texto = arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), opcionEscogida);
         QuestionsjLabel.setText(texto);
-        ultimaOpcionEscogida = ultimaEscogida;
+        //ultimaOpcionEscogida = ultimaEscogida;
         
         String diferencia, respuestaEscogida, newAnimal;  ;
         boolean animalEncontrado = false, animalPensado = false, diferenciaAnimales = false, verificar4 = false;
@@ -397,15 +397,18 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                     
                     NodoArbol nuevoNodo = new NodoArbol(diferencia);
 
-                    if (ultimaOpcionEscogida == false) {
-                        
+                //  if (ultimaOpcionEscogida == false) {
+                    if (opcionEscogida==0) {
+    
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
+                        nodoAuxiliar = arbol.getNodoRaíz();
 
                     } else {
                         
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
+                        nodoAuxiliar = arbol.getNodoRaíz();
                     }
 
                     if (respuestaEscogida.equals("n")) {
@@ -433,6 +436,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
     
                         //Aca deben colocar la funcion para que comience el juego de nuevo (no se si es esa)
                         QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
+                        nodoAuxiliar = arbol.getNodoRaíz();
                     }
                     animalEncontrado = true;
                 } 
@@ -574,7 +578,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 
     private void NojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NojButtonActionPerformed
 
-        formarElArbol(false, 0);
+        formarElArbol(0);
         //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 0));
 
         cont ++;
@@ -583,7 +587,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 
     private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
 
-        formarElArbol(true, 1);
+        formarElArbol(1);
         //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 1));
 
         cont ++;
