@@ -1,2 +1,2 @@
-¿Vuela?,Tiene cuerno,*Ratón,*Rinoceronte,Tiene plumas,*Mariposa,Habla,Pico grande,Es colorido,*Paloma,*Guacamaya,*Aguila,*Loro
-*Ratón,Tiene cuerno,*Rinoceronte,¿Vuela?,*Mariposa,Tiene plumas,*Paloma,Es colorido,*Guacamaya,Pico grande,*Aguila,Habla,*Loro
+¿Vuela?,es lindo,*Ratón,*perro,*Paloma
+*Ratón,es lindo,*perro,¿Vuela?,*Paloma

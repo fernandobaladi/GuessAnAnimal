@@ -32,7 +32,6 @@ public class Vista extends javax.swing.JFrame {
     NodoArbol nodoAuxiliar; //para guardar el ultimo nodo en el que se quedo, para poder desconectarlo del arbol
     //y conectarlo de nuevo pero con el arbol actualizado
     
-    //boolean ultimaOpcionEscogida = false; // true es derecha, false es izquierda
     
     /**
      * Creates new form Vista
@@ -43,8 +42,8 @@ public class Vista extends javax.swing.JFrame {
         GamejPanel.setVisible(false);
         QuestionNumberjLabel.setText("Pregunta número " + cont);
         
-        NodoArbol nodoHijo = new NodoArbol("*Ratón");
-        NodoArbol nodoHijo2 = new NodoArbol("*Paloma");
+        NodoArbol nodoHijo = new NodoArbol("Ratón");
+        NodoArbol nodoHijo2 = new NodoArbol("Paloma");
         
         
         /*
@@ -301,8 +300,7 @@ public void formarElArbol(int opcionEscogida) {
         boolean animalEncontrado = false, animalPensado = false, diferenciaAnimales = false, verificar4 = false;
         
         
-        if (QuestionsjLabel.getText().charAt(0) == '*') {//ese asterico es para verificar si es el ultimo nodo del arbol
-            //se puede sustituir por un espacio para que no se vea, pero por ahora le puse eso.
+        if (arbol.Buscar(arbol.getNodoRaíz(), QuestionsjLabel.getText()).esHoja() == true) {
             
             NodoArbol nodo = arbol.Buscar(arbol.getNodoRaíz(), texto);
             
@@ -333,14 +331,16 @@ public void formarElArbol(int opcionEscogida) {
                         }
                         else {
 
-                            newAnimal = "*"+newAnimal; // aqui le anado el asterico para luego saber que es el ultimo nodo
+                            //newAnimal = "*"+newAnimal; // aqui le anado el asterico para luego saber que es el ultimo nodo
 
                             animalPensado= true;
                         }
                     } while (animalPensado == false);
 
                     do{
-                        diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + newAnimal);
+                        
+                        diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + newAnimal + "?");
+                        diferencia = "¿" + diferencia + "?";
 
                         if (diferencia ==  null) {
 
