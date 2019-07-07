@@ -33,7 +33,7 @@ public class CustomJPanel extends JPanel{
 
 			//DrawNode(g, tree.root,100, 50,2);
 
-	Draw(g, 0, 1000, 0, 1000 / arbol.getheight(arbol.getNodoRaíz()), arbol.getNodoRaíz());
+	Draw(g, 0, getWidth(), 0, getHeight() / arbol.getheight(arbol.getNodoRaíz()), arbol.getNodoRaíz());
     
         
     }
@@ -46,7 +46,7 @@ public class CustomJPanel extends JPanel{
         g.setColor(Color.black);
         g.drawOval(((MinWidth + MaxWidth) / 2 - dataWidth / 2) -10, (MinHeight + Level / 2) - 35, dataWidth+20, dataWidth+20);
         g.drawString(data, (MinWidth + MaxWidth) / 2 - dataWidth / 2, MinHeight + Level / 2);
-
+        
         if (node.getHijoIzquierdo()!= null)            
         	Draw(g, MinWidth, (MinWidth + MaxWidth) / 2, MinHeight + Level, Level, node.getHijoIzquierdo());
         
