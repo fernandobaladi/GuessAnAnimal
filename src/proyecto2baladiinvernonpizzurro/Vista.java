@@ -5,8 +5,17 @@
  */
 package proyecto2baladiinvernonpizzurro;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.LinkedList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -17,12 +26,12 @@ public class Vista extends javax.swing.JFrame {
     
     private Arbol arbol = new Arbol();
     int cont=1;
-      
+    File archivo = new File("archivo.txt");    
+    Archivo a = new Archivo();  
     
     NodoArbol nodoAuxiliar; //para guardar el ultimo nodo en el que se quedo, para poder desconectarlo del arbol
     //y conectarlo de nuevo pero con el arbol actualizado
     
-    boolean ultimaOpcionEscogida = false; // true es derecha, false es izquierda
     
     /**
      * Creates new form Vista
@@ -33,8 +42,8 @@ public class Vista extends javax.swing.JFrame {
         GamejPanel.setVisible(false);
         QuestionNumberjLabel.setText("Pregunta número " + cont);
         
-        NodoArbol nodoHijo = new NodoArbol("*Ratón");
-        NodoArbol nodoHijo2 = new NodoArbol("*Paloma");
+        NodoArbol nodoHijo = new NodoArbol("Ratón");
+        NodoArbol nodoHijo2 = new NodoArbol("Paloma");
         
         
         /*
@@ -299,18 +308,17 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
+public void formarElArbol(int opcionEscogida) {
         
         String texto = arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), opcionEscogida);
         QuestionsjLabel.setText(texto);
-        ultimaOpcionEscogida = ultimaEscogida;
+        //ultimaOpcionEscogida = ultimaEscogida;
         
         String diferencia, respuestaEscogida, newAnimal;  ;
         boolean animalEncontrado = false, animalPensado = false, diferenciaAnimales = false, verificar4 = false;
         
         
-        if (QuestionsjLabel.getText().charAt(0) == '*') {//ese asterico es para verificar si es el ultimo nodo del arbol
-            //se puede sustituir por un espacio para que no se vea, pero por ahora le puse eso.
+        if (arbol.Buscar(arbol.getNodoRaíz(), QuestionsjLabel.getText()).esHoja() == true) {
             
             NodoArbol nodo = arbol.Buscar(arbol.getNodoRaíz(), texto);
             
@@ -341,14 +349,16 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                         }
                         else {
 
-                            newAnimal = "*"+newAnimal; // aqui le anado el asterico para luego saber que es el ultimo nodo
+                            //newAnimal = "*"+newAnimal; // aqui le anado el asterico para luego saber que es el ultimo nodo
 
                             animalPensado= true;
                         }
                     } while (animalPensado == false);
 
                     do{
-                        diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + newAnimal);
+                        
+                        diferencia = JOptionPane.showInputDialog( "¿Qué diferencia a un " + nodo.getData() + " de un " + newAnimal + "?");
+                        diferencia = "¿" + diferencia + "?";
 
                         if (diferencia ==  null) {
 
@@ -405,15 +415,18 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
                     
                     NodoArbol nuevoNodo = new NodoArbol(diferencia);
 
-                    if (ultimaOpcionEscogida == false) {
-                        
+                //  if (ultimaOpcionEscogida == false) {
+                    if (opcionEscogida==0) {
+    
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(nuevoNodo);
+                        nodoAuxiliar = arbol.getNodoRaíz();
 
                     } else {
                         
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(null);
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoDerecho(nuevoNodo);
+                        nodoAuxiliar = arbol.getNodoRaíz();
                     }
 
                     if (respuestaEscogida.equals("n")) {
@@ -441,6 +454,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
     
                         //Aca deben colocar la funcion para que comience el juego de nuevo (no se si es esa)
                         QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
+                        nodoAuxiliar = arbol.getNodoRaíz();
                     }
                     animalEncontrado = true;
                 } 
@@ -466,7 +480,36 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
         if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas guardar los animales agregados en la partida? " ,
                 "Guardar base de conocimientos extendida", YES_NO_OPTION) == 0){
         
-            //Acá deben colocar lo de guardar un archivo de texto
+             if (!archivo.exists()) {
+            try {
+                archivo.createNewFile();
+            } catch (IOException ex) {
+
+            }
+        }
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));
+                    LinkedList<String> listaPreorden = new LinkedList<String>();
+                    arbol.guardarPreorden(listaPreorden, arbol.getNodoRaíz());
+                    LinkedList<String> listaInorden = new LinkedList<String>();
+                    arbol.guardarInorden(listaInorden, arbol.getNodoRaíz());
+                    String cadenaPreorden;
+                    cadenaPreorden = listaPreorden.get(0);
+                    String cadenaInorden = listaInorden.get(0);
+                    for (int i = 1; i < listaPreorden.size(); i++) {
+                        cadenaPreorden = cadenaPreorden + "," + listaPreorden.get(i);
+                    }
+                    System.out.println(cadenaPreorden);
+                    for (int i = 1; i < listaInorden.size(); i++) {
+                        cadenaInorden = cadenaInorden + "," + listaInorden.get(i);
+                    }
+                    System.out.println(cadenaInorden);
+                    bw.write(cadenaPreorden);
+                    bw.newLine();
+                    bw.write(cadenaInorden);
+                    bw.close();
+                } catch (IOException ex) {
+                }
         }
     }//GEN-LAST:event_SavejButtonActionPerformed
 
@@ -475,7 +518,50 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
         if (JOptionPane.showConfirmDialog(null, "¿Deseas cargar una base de conocimientos guardada anteriormente? " ,
                 "Cargar base de datos extendida", YES_NO_OPTION) == 0){
         
-            //Acá deben colocar lo de cargar un archivo de texto
+        JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter filtroTXT = new FileNameExtensionFilter("*.TXT", "txt");
+        fc.setFileFilter(filtroTXT);
+        int seleccion = fc.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION ) {
+
+
+            archivo = fc.getSelectedFile();
+
+            String contenido = a.loadGame(archivo);
+            String auxEtiquetaCiudadVertice, auxIdCiudadVertice, auxDistancia, auxFeromonas, auxIdCiudadArista, auxEtiquetaCiudadArista;
+            try {
+
+                BufferedReader bf = new BufferedReader(new FileReader(fc.getSelectedFile().toString()));
+                String aux;
+                
+                String aux2  = bf.readLine();
+                String aux1 = bf.readLine();
+                
+
+                    aux = bf.readLine();
+                
+                    LinkedList<String> lista1 = new LinkedList<String>();
+                    LinkedList<String> lista2 = new LinkedList<String>();
+                    String[] array1 = aux1.split(",");
+                    String[] array2 = aux2.split(",");
+                    for (int i = 0; i < array1.length; i++) {
+                        lista1.add(array2[i]);
+                    }
+                    for (int i = 0; i < array2.length; i++) {
+                        lista2.add(array1[i]);
+                    }
+                    NodoArbol nodoCreado = new NodoArbol(lista1.getFirst());
+                    nodoCreado.setHijoDerecho(crearArbolDerecho(nodoCreado, lista1, lista2));
+                    nodoCreado.setHijoIzquierdo(crearArbolIzquierdo(nodoCreado, lista1, lista2));
+                    arbol.setNodoRaíz(nodoCreado);
+                  
+                    GamejPanel.setVisible(true);
+                    
+            } catch (Exception e) {
+                System.out.println("No se pudo leer el archivo.");
+            }
+            
+    }
         }
     }//GEN-LAST:event_LoadInfojButtonActionPerformed
 
@@ -491,7 +577,11 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
     private void DeletejButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletejButtonActionPerformed
         if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas borrar la información agregada y volver a la base de conocimientos predeterminada? " ,
                 "Borrar base de conocimientos extendida", YES_NO_OPTION) == 0){
-        
+            NodoArbol nodoDerecho = new NodoArbol("*Paloma");
+            NodoArbol nodoIzquierdo = new NodoArbol("*Raton");        
+            arbol.getNodoRaíz().setHijoDerecho(nodoDerecho);
+            arbol.getNodoRaíz().setHijoIzquierdo(nodoIzquierdo);
+            arbol.setNúmeroDeNodos(3);
             //Acá deben colocar lo que debe suceder para borrar todo lo que agregó el usuario
         }
     }//GEN-LAST:event_DeletejButtonActionPerformed
@@ -506,7 +596,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 
     private void NojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NojButtonActionPerformed
 
-        formarElArbol(false, 0);
+        formarElArbol(0);
         //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 0));
 
         cont ++;
@@ -515,7 +605,7 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
 
     private void YesjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesjButtonActionPerformed
 
-        formarElArbol(true, 1);
+        formarElArbol(1);
         //QuestionsjLabel.setText(arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), 1));
 
         cont ++;
@@ -558,6 +648,146 @@ public void formarElArbol(boolean ultimaEscogida, int opcionEscogida) {
         });
     }
 
+    //MÉTODOS ÚTILES PARA CARGAR EL ARCHIVO. NO TOCAR
+    public static NodoArbol crearArbolDerecho(NodoArbol nodoCreado, LinkedList<String> lista1, LinkedList<String> lista2){       
+        int eliminar = lista2.indexOf(lista1.getFirst());
+        LinkedList<String> lista2Derecha = new LinkedList<String>();
+        LinkedList<String> lista2Izquierda = new LinkedList<String>();
+        for (int i = 0; i < lista2.size(); i++) {
+            lista2Derecha.add(lista2.get(i));
+            lista2Izquierda.add(lista2.get(i));
+        }
+        String[] removidosLista2Derecha = new String[eliminar+1];
+        String[] removidosLista2Izquierda = new String[lista2Izquierda.size()-eliminar];
+        LinkedList<String> lista1Izquierda = new LinkedList<String>();
+        LinkedList<String> lista1Derecho = new LinkedList<String>();
+        for (int i = 0; i < lista1.size(); i++) {
+            lista1Derecho.add(lista1.get(i));
+            lista1Izquierda.add(lista1.get(i));
+        }
+        
+        int size = lista2Izquierda.size();
+        
+        for (int i = 0; i <=  eliminar; i++) {
+            //Aqui se eliminan los datos que van a la izquierda
+            removidosLista2Derecha[i] = lista2Derecha.getFirst();
+            lista2Derecha.removeFirst();
+        }
+
+
+        for (int i = 0; i < eliminar+1; i++) {
+            if(isInside(lista1Derecho, removidosLista2Derecha[i])){
+                lista1Derecho.remove(removidosLista2Derecha[i]);
+            }
+        }
+        
+        
+        for (int i = 0; i <size-eliminar; i++) {
+            //Aqui se eliminan los datos que van a la derecha
+            removidosLista2Izquierda[i] = lista2Izquierda.get(eliminar);
+            lista2Izquierda.remove(eliminar);
+        }
+
+        for (int i = 0; i < size-eliminar; i++) {
+            if(isInside(lista1Izquierda,removidosLista2Izquierda[i])){
+                lista1Izquierda.remove(removidosLista2Izquierda[i]);
+            }
+        }
+        
+        
+        
+        if (lista1Derecho.isEmpty()) {
+            return null;
+        }else{
+            NodoArbol nodoHijo = new NodoArbol(lista1Derecho.getFirst());
+            nodoHijo.setHijoDerecho(crearArbolDerecho(nodoHijo,lista1Derecho,lista2Derecha));
+            if (lista1Izquierda.isEmpty()) {
+                nodoHijo.setHijoIzquierdo(null);
+            }else{
+                nodoHijo.setHijoIzquierdo(crearArbolIzquierdo(nodoHijo, lista1Derecho, lista2Derecha));
+            }
+            return nodoHijo;
+        }
+        
+        
+       
+    }
+    
+    public static NodoArbol crearArbolIzquierdo(NodoArbol nodoCreado, LinkedList<String> lista1, LinkedList<String> lista2){       
+        
+        int eliminar = lista2.indexOf(lista1.getFirst());
+        LinkedList<String> lista2Derecha = new LinkedList<String>();
+        LinkedList<String> lista2Izquierda = new LinkedList<String>();
+        for (int i = 0; i < lista2.size(); i++) {
+            lista2Derecha.add(lista2.get(i));
+            lista2Izquierda.add(lista2.get(i));
+        }
+        LinkedList<String> lista1Izquierda = new LinkedList<String>();
+        LinkedList<String> lista1Derecho = new LinkedList<String>();
+        for (int i = 0; i < lista1.size(); i++) {
+            lista1Derecho.add(lista1.get(i));
+            lista1Izquierda.add(lista1.get(i));
+        }
+        String[] removidosLista2Izquierda = new String[lista2Izquierda.size()-eliminar];
+        String[] removidosLista2Derecha = new String[eliminar+1];
+
+        int size = lista2Izquierda.size();
+
+        for (int i = 0; i <size-eliminar; i++) {
+            //Aqui se eliminan los datos que van a la derecha
+            removidosLista2Izquierda[i] = lista2Izquierda.get(eliminar);
+            lista2Izquierda.remove(eliminar);
+        }
+
+        for (int i = 0; i < size-eliminar; i++) {
+            if(isInside(lista1Izquierda,removidosLista2Izquierda[i])){
+                lista1Izquierda.remove(removidosLista2Izquierda[i]);
+            }
+        }
+        for (int i = 0; i <=  eliminar; i++) {
+            //Aqui se eliminan los datos que van a la izquierda
+            removidosLista2Derecha[i] = lista2Derecha.getFirst();
+            lista2Derecha.removeFirst();
+        }
+
+
+        for (int i = 0; i < eliminar; i++) {
+            if(isInside(lista1Derecho, removidosLista2Derecha[i])){
+                lista1Derecho.remove(removidosLista2Derecha[i]);
+            }
+        }
+
+        
+        if (lista1Izquierda.isEmpty()) {
+            return null;
+        }else{
+            NodoArbol nodoHijo = new NodoArbol(lista1Izquierda.getFirst());
+            nodoHijo.setHijoIzquierdo(crearArbolIzquierdo(nodoHijo, lista1Izquierda, lista2Izquierda));
+            if (lista1Derecho.isEmpty()) {
+                nodoHijo.setHijoDerecho(null);
+            }else{
+                nodoHijo.setHijoDerecho(crearArbolDerecho(nodoHijo, lista1Izquierda, lista2Izquierda));
+            }
+            return nodoHijo;
+        }
+        
+
+        
+    }
+    
+    
+    public static boolean isInside(LinkedList<String> lista1, String elemen){
+    
+        for (int i = 0; i < lista1.size(); i++) {
+            if (lista1.get(i).equals(elemen)) {
+                return true;
+            }
+        }
+        return false;
+    
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DeletejButton;
     private javax.swing.JButton ExitjButton;
