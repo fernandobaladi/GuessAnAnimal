@@ -37,7 +37,8 @@ public class CustomJPanel extends JPanel{
     
         
     }
-   	
+   
+    //función para pintar el arbol en el panel dinamico 
     public void Draw(Graphics g, int MinWidth, int MaxWidth, int MinHeight, int Level, NodoArbol node) {
         String data = String.valueOf(node.getData());
         g.setFont(new Font("Arial", Font.BOLD, 12));

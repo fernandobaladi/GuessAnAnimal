@@ -29,23 +29,21 @@ public class CreateLabelDynamically extends JFrame {
     JScrollPane ScrollPane;
     Arbol arbol;
     
-    
+    //Creacion de un panel dinamico donde se mostrará el árbol
     public CreateLabelDynamically(Arbol arbol){
         
         this.arbol = arbol;
         Jpan = new CustomJPanel(arbol);
-        ScrollPane = new JScrollPane ();
+        ScrollPane = new JScrollPane (); //Permite que la pantalla tenga Scroll
         
-        //setLayout(null);
-        //Jpan.setLayout(null);
+        //Colocacion de las caracteristicas del Jpan y del ScrollPane
         Jpan.setPreferredSize(new Dimension (2000,2000));
-        //Jpan.setBounds(100, 100, 1500, 1000);
         Jpan.setOpaque(true);
         Jpan.setBackground( Color.white);
-        //ScrollPane.setOpaque(true);
         setBackground(Color.white);
-        //ScrollPane.setBackground(Color.white);
         ScrollPane.setBounds(50, 50, 900, 900);
+        
+        //Activacison del ScrollBar vertical
         ScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener (){
         
             @Override
@@ -54,6 +52,7 @@ public class CreateLabelDynamically extends JFrame {
             }
         });
         
+        //Activacion del ScrollBar horizontal
         ScrollPane.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener (){
         
             @Override
@@ -65,24 +64,8 @@ public class CreateLabelDynamically extends JFrame {
         ScrollPane.setViewportView(Jpan);
         
         add(ScrollPane);
-        
-        //add(Jpan);
-        
+                
         
     }
-    
-//    public void PanelRepaint(){
-//        Jpan.validate();
-//        Jpan.repaint();
-//        
-//    }
-    
-//    public void PaintCity( JLabel label , int posX, int posY ){
-//        label.setBounds(posX, posY, 54, 40);
-//        Jpan.add(label);
-//        
-//        this.PanelRepaint();
-//    }
-     
-    
+
 }

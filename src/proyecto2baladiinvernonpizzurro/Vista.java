@@ -317,9 +317,11 @@ public void formarElArbol(int opcionEscogida) {
         
         String texto = arbol.RecorrerPorPreguntas(QuestionsjLabel.getText(), opcionEscogida);
         QuestionsjLabel.setText(texto);
-        //ultimaOpcionEscogida = ultimaEscogida;
+                
+        //variables para guardar los inputs del usuario
+        String diferencia, respuestaEscogida, newAnimal;  
         
-        String diferencia, respuestaEscogida, newAnimal;  ;
+        //variables utilizadas en las verificaciones de los inputs del usuario en los JOptionPanes
         boolean animalEncontrado = false, animalPensado = false, diferenciaAnimales = false, verificar4 = false, verificarNewGame = false;
         
         
@@ -409,18 +411,10 @@ public void formarElArbol(int opcionEscogida) {
                         }
                     } while (verificar4 == false);
 
-                    //respuesta escogida puede ser "s" o "n"
-
-
-                    //ESTO ES UN EJEMPLO DE COMO LO PUEDE RESPONDER EL USUARIO
-                    //response = pato
-                    //diferencia = puede nadar
-                    //respuestaEscogida = n, porque el raton no nada
-                    //nodoAuxiliar es la raiz en el primer caso
-                    
+                                    
                     NodoArbol nuevoNodo = new NodoArbol(diferencia);
 
-                //  if (ultimaOpcionEscogida == false) {
+               
                     if (opcionEscogida==0) {
     
                         arbol.Buscar(arbol.getNodoRaíz(), nodoAuxiliar.getData()).setHijoIzquierdo(null);
@@ -452,13 +446,16 @@ public void formarElArbol(int opcionEscogida) {
 
                 } 
                 else if (n == 0) {
+                    
+                    /*Cuando responde que SI es correcta la respuesta entra aquí y le 
+                    pregunta con este JOptionPane de tipo Input cuál es la respuesta correcta*/
 
                     do {
                         int newGame = JOptionPane.showConfirmDialog(null, "¿Deseas volver a jugar?", "Fin de la partida!", YES_NO_OPTION);
                         
                         if (newGame == 0) {
 
-                            //Aca deben colocar la funcion para que comience el juego de nuevo (no se si es esa)
+                            
                             QuestionsjLabel.setText(arbol.getNodoRaíz().getData());
                             nodoAuxiliar = arbol.getNodoRaíz();
                             animalEncontrado = true;
@@ -587,6 +584,7 @@ public void formarElArbol(int opcionEscogida) {
 
     private void ExitjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitjButtonActionPerformed
         
+        //verificaion y funcion para salir de la partida
         if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas salir? " , "Salir", YES_NO_OPTION) == 0){
         
             System.exit(0);
@@ -595,6 +593,8 @@ public void formarElArbol(int opcionEscogida) {
     }//GEN-LAST:event_ExitjButtonActionPerformed
 
     private void DeletejButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletejButtonActionPerformed
+        
+        //funcion y verificacion para eliminar los datos agregados del arbol
         if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas borrar la información agregada y volver a la base de conocimientos predeterminada? " ,
                 "Borrar base de conocimientos extendida", YES_NO_OPTION) == 0){
             NodoArbol nodoDerecho = new NodoArbol("*Paloma");
@@ -608,6 +608,7 @@ public void formarElArbol(int opcionEscogida) {
 
     private void ShowjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowjButtonActionPerformed
         
+        //creacion de una ventana dinamica desplegable donde se mostrará el arbol  
         CreateLabelDynamically c = new CreateLabelDynamically(arbol);
         c.setTitle("Base de conocimientos completa");
         c.setSize(1000,1000);
