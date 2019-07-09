@@ -15,6 +15,7 @@ public class Proyecto2BaladiInvernonPizzurro {
 
     
     public static void main(String[] args) {
+        //Aquí se instancia la vista para que se pueda correr la aplicación
         Vista v = new Vista();
         v.setVisible(true);
         v.setResizable(false);

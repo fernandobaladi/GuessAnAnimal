@@ -15,29 +15,30 @@ import java.util.logging.Logger;
  */
 public class Archivo {
     File archivo;
-       String texto;
-       String[] arreglo;
+    String texto;
+    String[] arreglo;
 
-       FileInputStream entrada;
-       FileOutputStream salida;
-       PrintWriter escribir;
+    FileInputStream entrada;
+    FileOutputStream salida;
+    PrintWriter escribir;
 
 
-       public Archivo() {
-       }
+    public Archivo() {
+    }
 
-       public String loadGame(File archivo) {
-           String contenido = "";
-           try {
-               entrada = new FileInputStream(archivo);
-               int ascci;
-               while ((ascci = entrada.read()) != -1) {
-                   char caracter = (char) ascci;
-                   contenido += caracter;
-               }
-           } catch (Exception e) {
+    //Método para poder cargar el árbol
+    public String loadGame(File archivo) {
+        String contenido = "";
+        try {
+            entrada = new FileInputStream(archivo);
+            int ascci;
+            while ((ascci = entrada.read()) != -1) {
+                char caracter = (char) ascci;
+                contenido += caracter;
+            }
+        } catch (Exception e) {
 
-           }
-           return contenido;
-       }   
+        }
+        return contenido;
+    }   
 }

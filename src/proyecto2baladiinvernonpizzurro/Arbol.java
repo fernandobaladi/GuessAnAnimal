@@ -143,7 +143,7 @@ public class Arbol {
     
     }
     
-    
+    //Va recorriendo el árbol según el usuario responde las preguntas
     public String RecorrerPorPreguntas(String datoNodo, int respuesta){
     
         NodoArbol auxiliar = Buscar(this.nodoRaíz, datoNodo);
@@ -159,6 +159,8 @@ public class Arbol {
     
     }
     
+    
+    //Con estos dos métodos se obtienen los métodos para implementarlos en el archivo
     public void guardarPreorden(LinkedList<String> lista, NodoArbol padre){
 
         if(padre!=null){
@@ -180,13 +182,15 @@ public class Arbol {
     
     }
     
-   //Con este método se poda todo el árbol, dejándolo vacío
+    //Con este método se poda todo el árbol, dejándolo vacío
     public void Limpiar(){
         this.nodoRaíz = null;
         this.númeroDeNodos = 0;
         
     }  
     
+    
+    //Getters y Setters del árbol
     public NodoArbol getNodoRaíz() {
         return nodoRaíz;
     }

@@ -15,12 +15,16 @@ public class NodoArbol {
     private NodoArbol hijoDerecho;
     private String data; //Objeto que se le pasa al árbol
     
+    
+    //Aquí se instancia el constructor
     public NodoArbol(String data){
         this.hijoDerecho = null;
         this.hijoIzquierdo = null;
         this.data = data;
     }
 
+    
+    //Getters y Setters de los nodos
     public NodoArbol getHijoIzquierdo() {
         return hijoIzquierdo;
     }

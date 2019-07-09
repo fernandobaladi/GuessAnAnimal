@@ -1,2 +1,2 @@
-¿Vuela?,es lindo,*Ratón,*perro,*Paloma
-*Ratón,es lindo,*perro,¿Vuela?,*Paloma
+¿Vuela?,¿Nada?,¿Caza?,Ratón,¿Es un animal doméstico?,¿Tiene rayas?,León,Tigre,¿Es el mejor amigo del hombre?,Gato,Perro,Ballena,¿Es un insecto?,¿Es colorido?,Paloma,Colibri,¿Hace miel?,Mosquito,Abeja
+Ratón,¿Caza?,León,¿Tiene rayas?,Tigre,¿Es un animal doméstico?,Gato,¿Es el mejor amigo del hombre?,Perro,¿Nada?,Ballena,¿Vuela?,Paloma,¿Es colorido?,Colibri,¿Es un insecto?,Mosquito,¿Hace miel?,Abeja

@@ -505,7 +505,10 @@ public void formarElArbol(int opcionEscogida) {
             }
         }
                 try {
+                    
                     BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));
+                    
+                    //Se obtienen dos listas de los recorridos del arbol
                     LinkedList<String> listaPreorden = new LinkedList<String>();
                     arbol.guardarPreorden(listaPreorden, arbol.getNodoRaíz());
                     LinkedList<String> listaInorden = new LinkedList<String>();
@@ -513,6 +516,9 @@ public void formarElArbol(int opcionEscogida) {
                     String cadenaPreorden;
                     cadenaPreorden = listaPreorden.get(0);
                     String cadenaInorden = listaInorden.get(0);
+                    
+                    /*Aquí se pasan todos los elementos de las listas a Strings
+                    con su respectivo separador, el cual será la coma ','*/
                     for (int i = 1; i < listaPreorden.size(); i++) {
                         cadenaPreorden = cadenaPreorden + "," + listaPreorden.get(i);
                     }
@@ -521,6 +527,7 @@ public void formarElArbol(int opcionEscogida) {
                         cadenaInorden = cadenaInorden + "," + listaInorden.get(i);
                     }
                     System.out.println(cadenaInorden);
+                    //Ahora se escriben los String en el archivo
                     bw.write(cadenaPreorden);
                     bw.newLine();
                     bw.write(cadenaInorden);
@@ -535,50 +542,53 @@ public void formarElArbol(int opcionEscogida) {
         if (JOptionPane.showConfirmDialog(null, "¿Deseas cargar una base de conocimientos guardada anteriormente? " ,
                 "Cargar base de datos extendida", YES_NO_OPTION) == 0){
         
-        JFileChooser fc = new JFileChooser();
-        FileNameExtensionFilter filtroTXT = new FileNameExtensionFilter("*.TXT", "txt");
-        fc.setFileFilter(filtroTXT);
-        int seleccion = fc.showOpenDialog(this);
-        if (seleccion == JFileChooser.APPROVE_OPTION ) {
-
-
-            archivo = fc.getSelectedFile();
-
-            String contenido = a.loadGame(archivo);
-            String auxEtiquetaCiudadVertice, auxIdCiudadVertice, auxDistancia, auxFeromonas, auxIdCiudadArista, auxEtiquetaCiudadArista;
-            try {
-
-                BufferedReader bf = new BufferedReader(new FileReader(fc.getSelectedFile().toString()));
-                String aux;
-                
-                String aux2  = bf.readLine();
-                String aux1 = bf.readLine();
-                
-
-                    aux = bf.readLine();
-                
-                    LinkedList<String> lista1 = new LinkedList<String>();
-                    LinkedList<String> lista2 = new LinkedList<String>();
-                    String[] array1 = aux1.split(",");
-                    String[] array2 = aux2.split(",");
-                    for (int i = 0; i < array1.length; i++) {
-                        lista1.add(array2[i]);
-                    }
-                    for (int i = 0; i < array2.length; i++) {
-                        lista2.add(array1[i]);
-                    }
-                    NodoArbol nodoCreado = new NodoArbol(lista1.getFirst());
-                    nodoCreado.setHijoDerecho(crearArbolDerecho(nodoCreado, lista1, lista2));
-                    nodoCreado.setHijoIzquierdo(crearArbolIzquierdo(nodoCreado, lista1, lista2));
-                    arbol.setNodoRaíz(nodoCreado);
-                  
-                    GamejPanel.setVisible(true);
-                    
-            } catch (Exception e) {
-                System.out.println("No se pudo leer el archivo.");
-            }
+            //Busca el archivo
+            JFileChooser fc = new JFileChooser();
+            FileNameExtensionFilter filtroTXT = new FileNameExtensionFilter("*.TXT", "txt");
+            fc.setFileFilter(filtroTXT);
+            int seleccion = fc.showOpenDialog(this);
             
-    }
+            if (seleccion == JFileChooser.APPROVE_OPTION ) {
+
+
+                archivo = fc.getSelectedFile();
+
+                String contenido = a.loadGame(archivo);
+                try {
+
+                    BufferedReader bf = new BufferedReader(new FileReader(fc.getSelectedFile().toString()));
+                    String aux;
+                    
+                    /*Los archivos sólo pueden tener dos líneas, así que se
+                    pasan a Strings*/  
+                    String aux2  = bf.readLine();
+                    String aux1 = bf.readLine();
+
+
+                        aux = bf.readLine();
+
+                    //Los String se pasan a LinkedList para poder recorrerlos mejor
+                        LinkedList<String> lista1 = new LinkedList<String>();
+                        LinkedList<String> lista2 = new LinkedList<String>();
+                        String[] array1 = aux1.split(",");
+                        String[] array2 = aux2.split(",");
+                        for (int i = 0; i < array1.length; i++) {
+                            lista1.add(array2[i]);
+                        }
+                        for (int i = 0; i < array2.length; i++) {
+                            lista2.add(array1[i]);
+                        }
+                        NodoArbol nodoCreado = new NodoArbol(lista1.getFirst());
+                        nodoCreado.setHijoDerecho(crearArbolDerecho(nodoCreado, lista1, lista2));
+                        nodoCreado.setHijoIzquierdo(crearArbolIzquierdo(nodoCreado, lista1, lista2));
+                        arbol.setNodoRaíz(nodoCreado);
+
+                        GamejPanel.setVisible(true);
+
+                } catch (Exception e) {
+                    System.out.println("No se pudo leer el archivo.");
+                }            
+            }
         }
     }//GEN-LAST:event_LoadInfojButtonActionPerformed
 
@@ -597,6 +607,7 @@ public void formarElArbol(int opcionEscogida) {
         //funcion y verificacion para eliminar los datos agregados del arbol
         if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas borrar la información agregada y volver a la base de conocimientos predeterminada? " ,
                 "Borrar base de conocimientos extendida", YES_NO_OPTION) == 0){
+            //Se coloca como hijos derecho e hijo izquierdo a los valores de default
             NodoArbol nodoDerecho = new NodoArbol("*Paloma");
             NodoArbol nodoIzquierdo = new NodoArbol("*Raton");        
             arbol.getNodoRaíz().setHijoDerecho(nodoDerecho);
@@ -671,6 +682,8 @@ public void formarElArbol(int opcionEscogida) {
 
     //MÉTODOS ÚTILES PARA CARGAR EL ARCHIVO. NO TOCAR
     public static NodoArbol crearArbolDerecho(NodoArbol nodoCreado, LinkedList<String> lista1, LinkedList<String> lista2){       
+        
+        //Se crean variables y estructuras auxiliares para poder utilizarlas en la recursividad
         int eliminar = lista2.indexOf(lista1.getFirst());
         LinkedList<String> lista2Derecha = new LinkedList<String>();
         LinkedList<String> lista2Izquierda = new LinkedList<String>();
@@ -689,6 +702,7 @@ public void formarElArbol(int opcionEscogida) {
         
         int size = lista2Izquierda.size();
         
+        //Se implmentan 4 for para poder eliminar valores innecesarios de las listas
         for (int i = 0; i <=  eliminar; i++) {
             //Aqui se eliminan los datos que van a la izquierda
             removidosLista2Derecha[i] = lista2Derecha.getFirst();
@@ -716,7 +730,7 @@ public void formarElArbol(int opcionEscogida) {
         }
         
         
-        
+        //Obtención del elemento a devolver para seguir con la construcción del arbol
         if (lista1Derecho.isEmpty()) {
             return null;
         }else{
@@ -736,6 +750,8 @@ public void formarElArbol(int opcionEscogida) {
     
     public static NodoArbol crearArbolIzquierdo(NodoArbol nodoCreado, LinkedList<String> lista1, LinkedList<String> lista2){       
         
+        
+        //Se crean variables y estructuras auxiliares para poder utilizarlas en la recursividad
         int eliminar = lista2.indexOf(lista1.getFirst());
         LinkedList<String> lista2Derecha = new LinkedList<String>();
         LinkedList<String> lista2Izquierda = new LinkedList<String>();
@@ -754,6 +770,7 @@ public void formarElArbol(int opcionEscogida) {
 
         int size = lista2Izquierda.size();
 
+        //Se implmentan 4 for para poder eliminar valores innecesarios de las listas
         for (int i = 0; i <size-eliminar; i++) {
             //Aqui se eliminan los datos que van a la derecha
             removidosLista2Izquierda[i] = lista2Izquierda.get(eliminar);
@@ -778,7 +795,7 @@ public void formarElArbol(int opcionEscogida) {
             }
         }
 
-        
+        //Obtención del elemento a devolver para seguir con la construcción del arbol
         if (lista1Izquierda.isEmpty()) {
             return null;
         }else{
@@ -796,7 +813,8 @@ public void formarElArbol(int opcionEscogida) {
         
     }
     
-    
+    /*Este método es usado por los dos anteriores para poder
+    verificar que si un elemento se encuentra en la lista*/
     public static boolean isInside(LinkedList<String> lista1, String elemen){
     
         for (int i = 0; i < lista1.size(); i++) {
